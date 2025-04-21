@@ -167,3 +167,4 @@ C:\dot net\BibliothequeAPI\obj\Debug\net9.0\refint\BibliothequeAPI.dll
 C:\dot net\BibliothequeAPI\obj\Debug\net9.0\BibliothequeAPI.pdb
 C:\dot net\BibliothequeAPI\obj\Debug\net9.0\BibliothequeAPI.genruntimeconfig.cache
 C:\dot net\BibliothequeAPI\obj\Debug\net9.0\ref\BibliothequeAPI.dll
+C:\dot net\BibliothequeAPI\obj\Debug\net9.0\BibliothequeAPI.sourcelink.json
