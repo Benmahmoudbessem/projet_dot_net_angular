@@ -1,0 +1,83 @@
+<div class="container">
+  <h2>Gestion des Emprunts</h2>
+
+  <div class="row">
+    <!-- Liste des emprunts -->
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          Liste des emprunts
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Livre</th>
+                <th>Utilisateur</th>
+                <th>Date d'emprunt</th>
+                <th>Date de retour prévue</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emprunt of emprunts">
+                <td>{{ getNomLivre(emprunt.livreId) }}</td>
+                <td>{{ getNomUtilisateur(emprunt.utilisateurId) }}</td>
+                <td>{{ formatDate(emprunt.dateEmprunt) }}</td>
+                <td>{{ formatDate(emprunt.dateRetourPrevue) }}</td>
+                <td>
+                  <span class="badge" [ngClass]="emprunt.estRendu ? 'bg-success' : 'bg-warning'">
+                    {{ emprunt.estRendu ? 'Rendu' : 'En cours' }}
+                  </span>
+                </td>
+                <td>
+                  <button *ngIf="!emprunt.estRendu" class="btn btn-sm btn-success me-1" (click)="retournerEmprunt(emprunt.id!)">Retourner</button>
+                  <button class="btn btn-sm btn-danger" (click)="supprimerEmprunt(emprunt.id!)">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire d'ajout -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Nouvel emprunt
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="mb-3">
+              <label for="livre" class="form-label">Livre</label>
+              <select class="form-select" id="livre" [(ngModel)]="nouvelEmprunt.livreId" name="livreId" required>
+                <option [value]="0" disabled>Sélectionnez un livre</option>
+                <option *ngFor="let livre of livres" [value]="livre.id" [disabled]="livre.exemplairesDisponibles <= 0">
+                  {{ livre.titre }} ({{ livre.exemplairesDisponibles }} disponibles)
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="utilisateur" class="form-label">Utilisateur</label>
+              <select class="form-select" id="utilisateur" [(ngModel)]="nouvelEmprunt.utilisateurId" name="utilisateurId" required>
+                <option [value]="0" disabled>Sélectionnez un utilisateur</option>
+                <option *ngFor="let utilisateur of utilisateurs" [value]="utilisateur.id">
+                  {{ utilisateur.prenom }} {{ utilisateur.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="commentaire" class="form-label">Commentaire</label>
+              <textarea class="form-control" id="commentaire" [(ngModel)]="nouvelEmprunt.commentaire" name="commentaire" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="ajouterEmprunt()" [disabled]="nouvelEmprunt.livreId === 0 || nouvelEmprunt.utilisateurId === 0">
+              Enregistrer l'emprunt
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

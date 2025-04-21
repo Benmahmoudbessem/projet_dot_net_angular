@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <h2>Gestion des Utilisateurs</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Liste des utilisateurs</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let utilisateur of utilisateurs">
+            <td>{{ utilisateur.nom }}</td>
+            <td>{{ utilisateur.email }}</td>
+            <td>
+              <button class="btn btn-sm btn-info" (click)="selectionnerUtilisateur(utilisateur)">Éditer</button>
+              <button class="btn btn-sm btn-danger" (click)="supprimerUtilisateur(utilisateur.id!)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h4>{{ modeEdition ? 'Modifier un utilisateur' : 'Ajouter un utilisateur' }}</h4>
+      <form (ngSubmit)="modeEdition ? mettreAJourUtilisateur() : ajouterUtilisateur()" #utilisateurForm="ngForm">
+
+        <div class="mb-2">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" class="form-control"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.nom : nouvelUtilisateur.nom"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.nom = $event : nouvelUtilisateur.nom = $event"
+            required />
+        </div>
+
+        <div class="mb-2">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" class="form-control"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.prenom : nouvelUtilisateur.prenom"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.prenom = $event : nouvelUtilisateur.prenom = $event"
+            required />
+        </div>
+
+        <div class="mb-2">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.email : nouvelUtilisateur.email"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.email = $event : nouvelUtilisateur.email = $event"
+            required />
+        </div>
+
+        <div class="mb-2">
+          <label for="telephone">Téléphone</label>
+          <input type="text" id="telephone" name="telephone" class="form-control"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.telephone : nouvelUtilisateur.telephone"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.telephone = $event : nouvelUtilisateur.telephone = $event" />
+        </div>
+
+        <div class="mb-2">
+          <label for="adresse">Adresse</label>
+          <input type="text" id="adresse" name="adresse" class="form-control"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.adresse : nouvelUtilisateur.adresse"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.adresse = $event : nouvelUtilisateur.adresse = $event" />
+        </div>
+
+        <div class="form-check form-switch mb-3">
+          <input type="checkbox" id="estActif" name="estActif" class="form-check-input"
+            [ngModel]="modeEdition ? utilisateurSelectionne?.estActif : nouvelUtilisateur.estActif"
+            (ngModelChange)="modeEdition ? utilisateurSelectionne!.estActif = $event : nouvelUtilisateur.estActif = $event" />
+          <label class="form-check-label" for="estActif">Actif</label>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary" [disabled]="utilisateurForm.invalid">
+            {{ modeEdition ? 'Mettre à jour' : 'Ajouter' }}
+          </button>
+          <button *ngIf="modeEdition" type="button" class="btn btn-secondary" (click)="annulerEdition()">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
